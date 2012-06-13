@@ -225,15 +225,61 @@ describe 'collections', ->
   ################
   it 'sortBy', ->
     ret = _.sortBy @array, (num) -> num
-    console.log ret
-    ret.should.eql [3,2,1]
+    ret.should.eql [1,2,3]
 
     ret = _.sortBy @array, (num)-> 10-num
-    console.log ret
-    ret.should.eql [1,2,3]
+    ret.should.eql [3,2,1]
 
   ################
   # groupBy
-  # function (list, [iterator])
-  # asce
+  # function (list, iterator)
+  # iterator is a must
   ################
+  it 'groupBy', ->
+    ret = _.groupBy @array, (num)->num%2
+    ret.should.eql { 0:[2], 1:[1,3] }
+
+  ################
+  # sortedIndex
+  # function (list, value, [iterator])
+  # return the pos using binary tree search O(logN)
+  ################
+  it 'sortedIndex', ->
+    ret = _.sortedIndex @array, 1.5
+    ret.should.equal 1
+    ret = _.sortedIndex @array, 0.5
+    ret.should.equal 0
+    ret = _.sortedIndex @array, 3.5, (num)->3-num
+    ret.should.equal 0
+  
+  ################
+  # shuffle
+  # function (list)
+  # result change according time change
+  ################
+  it 'shuffle',->
+    ret = _.shuffle @array
+    console.log ret
+
+  ################
+  # toArray
+  # function (list)
+  # toArray
+  ################
+  it 'toArray', ->
+    ret = _.toArray @object
+    ret.should.eql ['x', 'y']
+
+    ret = _.toArray @stooges[0]
+    ret.should.eql ['moe',40]
+
+  ################
+  # size
+  # function (list)
+  # return the size
+  ################
+  it 'size', ->
+    ret = _.size @array
+    ret.should.equal 3
+    ret = _.size @object
+    ret.should.equal 2
